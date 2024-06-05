@@ -1,0 +1,73 @@
+.App {
+  text-align: center;
+}
+
+/*
+.home {
+  margin-top: 50px;
+}
+
+button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+*/
+
+.home {
+  height: 100vh; /* Full height */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-image: url('./assets/home_background.png'); /* Path based on public folder */
+  background-size: cover;
+  background-position: center;
+}
+
+.home div {
+  margin: 10px;
+}
+
+.home button {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+canvas {
+  background-color: black;
+  cursor: crosshair;
+  margin-top: 20px;
+  border: 1px solid black;
+}
+
+.sidebar {
+  width: 200px;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: #f4f4f4;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  padding-top: 20px;
+  padding-bottom: 20px;
+  box-sizing: border-box;
+}
+.sidebar button {
+  display: block;
+  width: 80%;
+  margin: 10px auto;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  background-color: #008cba;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.sidebar button:hover {
+  background-color: #005f5f;
+}
+
