@@ -43,7 +43,6 @@ canvas {
   margin: 10px auto;
   padding: 10px;
   font-size: 16px;
-  border: none;
   background-color: #fee6e3;
   color: #111;
   border: 2px solid #6b5344;
@@ -84,4 +83,42 @@ hr {
   border: none;
   border-top: 2px solid #6b5344; /* Adjust color and thickness */
   margin: 20px 0; /* Adjust spacing */
+}
+
+
+
+.resizable-container {
+  position: relative;
+  width: 100%;
+  height: 130px; /* Initial height of the resizable container */
+  background-color: #f0f0f0;
+  overflow: hidden;
+  display: flex; /* Use flexbox for horizontal layout */
+}
+
+.content {
+  border: 1px solid #ccc;
+}
+
+.inner-content {
+  padding: 10px;
+}
+
+.brush-color-button {
+  display: inline-block;
+  padding: 10px;
+  height: 40px;
+  width: 40px;
+  font-size: 16px;
+  color: white;
+  background-color: var(--button-color, #007bff); /* Default color if not specified */
+  border: 2px solid #ccc;
+  border-radius: 70%; /* Makes the button circular */
+  cursor: pointer;
+  text-decoration: none; /* Remove underline from button */
+  outline: none; /* Remove default focus outline */
+}
+
+.brush-color-button:hover {
+  border: 2px solid #fed8d3;
 }

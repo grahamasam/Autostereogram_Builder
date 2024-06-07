@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import './App.css';
 
 /*
 canvas elements and functionality for drawing a depth map
@@ -11,6 +12,7 @@ const Canvas = () => {
   const [brushSize, setBrushSize] = useState(10);  // Default brush size
   const [width, setWidth] = useState(600);
   const [height, setHeight] = useState(400);
+  const [brushColor, setBrushColor] = useState('white');
 
   const startDrawing = (e) => {
     const canvas = canvasRef.current;
@@ -33,7 +35,7 @@ const Canvas = () => {
     // Draw the circle
     context.beginPath();
     context.arc(centerX, centerY, brushSize, 0, 2 * Math.PI);
-    context.fillStyle = 'white'; // Set fill color
+    context.fillStyle = brushColor; // Set fill color
     context.fill(); // Fill the circle
   };
 
@@ -67,6 +69,10 @@ const Canvas = () => {
     setBrushSize(e.target.value);
   };
 
+  const handleColorChange = (color) => {
+    setBrushColor(color);
+  };
+
   return (
     <div style={{ margin: '15px'}}>
       <div style={{ marginBottom: '10px', display: 'flex', alignItems: 'center' }}>
@@ -76,37 +82,52 @@ const Canvas = () => {
         <button style={{ display: 'block', marginRight: '0' }} onClick={saveDrawing}>Save Drawing</button>
       </div >
       <hr style={{ margin: '10px 0' }} />
-      <div style={{ marginBottom: '10px', display: 'flex', alignItems: 'center' }}>
-        <label style={{ marginRight: '10px' }}>
-          Width:
-          <input
-            type="number"
-            value={width}
-            onChange={(e) => setWidth(parseInt(e.target.value))}
-            style={{ marginLeft: '5px', marginRight: '20px', width: '50px' }}
-          />
-        </label>
-        <label style={{ marginRight: '10px' }}>
-          Height:
-          <input
-            type="number"
-            value={height}
-            onChange={(e) => setHeight(parseInt(e.target.value))}
-            style={{ marginLeft: '5px', width: '50px'  }}
-          />
-        </label>
-      </div>
-      <div>
-        <label>
-            Brush Size: 
-            <input 
-              type="number" 
-              value={brushSize} 
-              onChange={handleBrushSizeChange} 
-              min="1" 
-              style={{ marginLeft: '10px', width: '50px' }}
-            />
-        </label>
+      <div class="resizable-container">
+        <div class="content">
+          <div class="inner-content">
+            <label style={{ marginRight: '10px' }}>
+              Width:
+              <input
+                type="number"
+                value={width}
+                onChange={(e) => setWidth(parseInt(e.target.value))}
+                style={{ marginLeft: '5px', width: '50px' }}
+              />
+            </label>
+          </div>
+          <div class="inner-content">
+            <label style={{ marginRight: '10px' }}>
+              Height:
+              <input
+                type="number"
+                value={height}
+                onChange={(e) => setHeight(parseInt(e.target.value))}
+                style={{ marginLeft: '5px', width: '50px'  }}
+              />
+            </label>
+          </div>
+        </div>
+        <div class="content">
+          <div class="inner-content">
+            <label>
+              Brush Size: 
+              <input 
+                type="number" 
+                value={brushSize} 
+                onChange={handleBrushSizeChange} 
+                min="1" 
+                style={{ marginLeft: '10px', width: '50px' }}
+              />
+            </label>
+          </div>
+          <div class="inner-content" style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <button class="brush-color-button" style={{ '--button-color': brushColor, border: '2px solid #fed8d3' }}></button>
+            <div style={{ width: '2px' }}></div>
+            <button class="brush-color-button" style={{ '--button-color': 'white' }} onClick={() => handleColorChange('white')}></button>
+            <button class="brush-color-button" style={{ '--button-color': 'grey' }} onClick={() => handleColorChange('grey')}></button>
+            <button class="brush-color-button" style={{ '--button-color': 'black' }} onClick={() => handleColorChange('black')}></button>
+          </div>
+        </div>
       </div>
       
       <canvas
