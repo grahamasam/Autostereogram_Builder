@@ -74,14 +74,17 @@ const Canvas = () => {
   };
 
   return (
-    <div style={{ margin: '15px'}}>
-      <div style={{ marginBottom: '10px', display: 'flex', alignItems: 'center' }}>
-        <Link to="/" style={{ marginRight: '10px' }}>
-          <button>Back to Home</button>
-        </Link>
-        <button style={{ display: 'block', marginRight: '0' }} onClick={saveDrawing}>Save Drawing</button>
-      </div >
-      <hr style={{ margin: '10px 0' }} />
+    <div>
+      <div style={{ backgroundColor: '#f8ecc9', height: '90px', borderBottom: '2px solid #6b5344', marginBottom: '15px' }}>
+        <div class="return-top-bar">
+          <div style={{ marginTop: '10px', marginLeft: '15px', display: 'flex', alignItems: 'center' }}>
+            <Link to="/" style={{ marginRight: '10px' }}>
+              <button className='return-bar-button'>Back to Home</button>
+            </Link>
+            <button className='return-bar-button' style={{ display: 'block', marginRight: '0' }} onClick={saveDrawing}>Save Drawing</button>
+          </div>
+        </div>
+      </div>
       <div class="resizable-container">
         <div class="content">
           <div class="inner-content">

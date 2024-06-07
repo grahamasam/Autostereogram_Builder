@@ -32,7 +32,7 @@ canvas {
   left: 30px;
   top: 30px;
   background-color: #F8D5C9;
-  box-shadow: -2px 0 8px  rgba(0, 0, 0, 0.2), 2px 0 8px rgba(0, 0, 0, 0.2), 0 -2px 8px rgba(0, 0, 0, 0.2);; 
+  box-shadow: -2px 0 8px  rgba(0, 0, 0, 0.2), 2px 0 8px rgba(0, 0, 0, 0.2), 0 -2px 8px rgba(0, 0, 0, 0.2);
   z-index: 2;
   border-radius: 15px;
   padding-top: 15px;
@@ -45,14 +45,14 @@ canvas {
   font-size: 16px;
   background-color: #fee6e3;
   color: #111;
-  border: 2px solid #6b5344;
+  border: 2px solid #6b53447b;
   border-radius: 8px;
   cursor: pointer;
   border-radius: 5px;
 }
 .sidebar button:hover {
   background-color: #fed8d3;
-  border: 2px solid #757575;
+  border: 2px solid #6b5344;
 }
 
 .my_funny_css {
@@ -121,4 +121,32 @@ hr {
 
 .brush-color-button:hover {
   border: 2px solid #fed8d3;
+}
+
+.return-top-bar {
+  height: 60px;
+  position: fixed;
+  left: 15px;
+  top: 15px;
+  width: 100%;
+  background-color: #fee6e3;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.2);
+}
+
+.return-bar-button {
+  display: block;
+  padding: 10px;
+  font-size: 16px;
+  background-color: #fee6e3;
+  color: #111;
+  border: 2px solid #6b53447b;
+  border-radius: 8px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.return-bar-button:hover {
+  background-color: #fed8d3;
+  border: 2px solid #6b5344;
 }
