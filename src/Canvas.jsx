@@ -8,7 +8,7 @@ canvas elements and functionality for drawing a depth map
 const Canvas = () => {
   const canvasRef = useRef(null);
   const [isDrawing, setIsDrawing] = useState(false);
-  const [brushSize, setBrushSize] = useState(2);  // Default brush size
+  const [brushSize, setBrushSize] = useState(10);  // Default brush size
   const [width, setWidth] = useState(600);
   const [height, setHeight] = useState(400);
 
@@ -25,10 +25,16 @@ const Canvas = () => {
 
     const canvas = canvasRef.current;
     const context = canvas.getContext('2d');
-    context.lineTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
-    context.strokeStyle = 'white';
-    context.lineWidth = brushSize;
-    context.stroke();
+    
+    // Calculate the coordinates for the center of the circle
+    const centerX = e.nativeEvent.offsetX;
+    const centerY = e.nativeEvent.offsetY;
+
+    // Draw the circle
+    context.beginPath();
+    context.arc(centerX, centerY, brushSize, 0, 2 * Math.PI);
+    context.fillStyle = 'white'; // Set fill color
+    context.fill(); // Fill the circle
   };
 
   const stopDrawing = () => {
@@ -77,7 +83,7 @@ const Canvas = () => {
             type="number"
             value={width}
             onChange={(e) => setWidth(parseInt(e.target.value))}
-            style={{ marginLeft: '5px', marginRight: '20px' }}
+            style={{ marginLeft: '5px', marginRight: '20px', width: '50px' }}
           />
         </label>
         <label style={{ marginRight: '10px' }}>
@@ -86,7 +92,7 @@ const Canvas = () => {
             type="number"
             value={height}
             onChange={(e) => setHeight(parseInt(e.target.value))}
-            style={{ marginLeft: '5px' }}
+            style={{ marginLeft: '5px', width: '50px'  }}
           />
         </label>
       </div>
