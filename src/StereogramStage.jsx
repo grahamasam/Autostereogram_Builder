@@ -51,13 +51,16 @@ const StereogramStage = () => {
   };
 
   return (
-    <div style={{ margin: '15px'}}>
-      <div style={{ marginBottom: '10px', display: 'flex', alignItems: 'center' }}>
-        <Link to="/" style={{ marginRight: '10px' }}>
-          <button>Back to Home</button>
-        </Link>
+    <div>
+      <div style={{ backgroundColor: '#f8ecc9', height: '90px', borderBottom: '2px solid #6b5344', marginBottom: '15px' }}>
+        <div class="return-top-bar">
+          <div style={{ position: 'relative', top: '10px', left: '15px', display: 'flex', alignItems: 'center' }}>
+            <Link to="/" style={{ marginRight: '10px' }}>
+              <button className='return-bar-button'>Back to Home</button>
+            </Link>
+          </div>
+        </div>
       </div>
-      <hr style={{}}/>
       <div style={{ marginBottom: '10px', display: 'flex', alignItems: 'center' }}>
         <button onClick={handleUseDepthMap}>Use Depth Map</button>
         <button onClick={handleGenerateRandom}>Generate Random</button>

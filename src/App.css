@@ -125,11 +125,11 @@ hr {
 
 .return-top-bar {
   height: 60px;
-  position: fixed;
+  position: relative;
   left: 15px;
   top: 15px;
   width: 100%;
-  background-color: #fee6e3;
+  background-color: #F8D5C9;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
   box-shadow: -2px 0 8px rgba(0, 0, 0, 0.2);

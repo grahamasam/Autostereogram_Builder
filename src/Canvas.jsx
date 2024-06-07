@@ -77,7 +77,7 @@ const Canvas = () => {
     <div>
       <div style={{ backgroundColor: '#f8ecc9', height: '90px', borderBottom: '2px solid #6b5344', marginBottom: '15px' }}>
         <div class="return-top-bar">
-          <div style={{ marginTop: '10px', marginLeft: '15px', display: 'flex', alignItems: 'center' }}>
+          <div style={{ position: 'relative', top: '10px', left: '15px', display: 'flex', alignItems: 'center' }}>
             <Link to="/" style={{ marginRight: '10px' }}>
               <button className='return-bar-button'>Back to Home</button>
             </Link>
