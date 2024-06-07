@@ -5,8 +5,8 @@ import './App.css';
 import StereogramStage from './StereogramStage';
 
 const Home = () => (
-  <div className="home">
-    <div class="sidebar">
+  <div className="my_funny_css">
+    <div className="sidebar">
       <Link to="/canvas">
         <button>Draw Depth Map</button>
       </Link>
@@ -15,6 +15,7 @@ const Home = () => (
       </Link>
     </div>
   </div>
+  
 );
 
 const CanvasScreen = () => (

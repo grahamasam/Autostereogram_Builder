@@ -62,7 +62,7 @@ const Canvas = () => {
   };
 
   return (
-    <div>
+    <div style={{ margin: '15px'}}>
       <div style={{ marginBottom: '10px', display: 'flex', alignItems: 'center' }}>
         <Link to="/" style={{ marginRight: '10px' }}>
           <button>Back to Home</button>
@@ -98,7 +98,6 @@ const Canvas = () => {
               value={brushSize} 
               onChange={handleBrushSizeChange} 
               min="1" 
-              max="50" 
               style={{ marginLeft: '10px', width: '50px' }}
             />
         </label>

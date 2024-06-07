@@ -1,33 +1,15 @@
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent;
+}
+
 .App {
   text-align: center;
-}
-
-/*
-.home {
-  margin-top: 50px;
-}
-
-button {
-  margin-top: 20px;
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-}
-*/
-
-.home {
-  height: 100vh; /* Full height */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-image: url('./assets/home_background.png'); /* Path based on public folder */
-  background-size: cover;
-  background-position: center;
-}
-
-.home div {
-  margin: 10px;
 }
 
 .home button {
@@ -47,13 +29,13 @@ canvas {
   width: 200px;
   height: 100vh;
   position: fixed;
-  left: 0;
-  top: 0;
-  background-color: #f4f4f4;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-  padding-top: 20px;
-  padding-bottom: 20px;
-  box-sizing: border-box;
+  left: 30px;
+  top: 30px;
+  background-color: #F8D5C9;
+  box-shadow: -2px 0 8px  rgba(0, 0, 0, 0.2), 2px 0 8px rgba(0, 0, 0, 0.2), 0 -2px 8px rgba(0, 0, 0, 0.2);; 
+  z-index: 2;
+  border-radius: 15px;
+  padding-top: 15px;
 }
 .sidebar button {
   display: block;
@@ -62,12 +44,44 @@ canvas {
   padding: 10px;
   font-size: 16px;
   border: none;
-  background-color: #008cba;
-  color: white;
+  background-color: #fee6e3;
+  color: #111;
+  border: 2px solid #6b5344;
+  border-radius: 8px;
   cursor: pointer;
   border-radius: 5px;
 }
 .sidebar button:hover {
-  background-color: #005f5f;
+  background-color: #fed8d3;
+  border: 2px solid #757575;
 }
 
+.my_funny_css {
+  --s: 10px; /* control the size*/
+  --c1: #6b5344;
+  --c2: #f8ecc9;
+  
+  --_l: #0000 46%,var(--c1) 47% 53%,#0000 54%;
+  background:
+    radial-gradient(circle at 2px 2px, var(--c1) 2px, var(--c2) 0);
+  background-size: calc(var(--s)*2) calc(var(--s)*2);
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  animation: moveBackground 120s linear infinite;
+}
+
+@keyframes moveBackground {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 100% 100%;
+  }
+}
+
+hr {
+  border: none;
+  border-top: 2px solid #6b5344; /* Adjust color and thickness */
+  margin: 20px 0; /* Adjust spacing */
+}

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { invoke } from '@tauri-apps/api/tauri';
+import './App.css';
 
 const StereogramStage = () => {
   const [imageSrc, setImageSrc] = useState('');
@@ -50,13 +51,13 @@ const StereogramStage = () => {
   };
 
   return (
-    <div>
+    <div style={{ margin: '15px'}}>
       <div style={{ marginBottom: '10px', display: 'flex', alignItems: 'center' }}>
         <Link to="/" style={{ marginRight: '10px' }}>
           <button>Back to Home</button>
         </Link>
       </div>
-      <hr style={{ margin: '10px 0' }} />
+      <hr style={{}}/>
       <div style={{ marginBottom: '10px', display: 'flex', alignItems: 'center' }}>
         <button onClick={handleUseDepthMap}>Use Depth Map</button>
         <button onClick={handleGenerateRandom}>Generate Random</button>

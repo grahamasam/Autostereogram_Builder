@@ -5,10 +5,7 @@ use tauri::command;
 use rand::Rng;
 use std::io::Cursor;
 use base64::{decode, encode};
-use std::path::PathBuf;
-use image::{DynamicImage, Rgba, RgbaImage, ImageBuffer, RgbImage};
-use imageproc::drawing::Blend;
-use imageproc::pixelops::weighted_sum;
+use image::{ImageBuffer, RgbImage};
 
 // Function to generate the random image
 fn generate_random_image(width: u32, height: u32) -> RgbImage {
