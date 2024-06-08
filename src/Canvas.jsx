@@ -2,10 +2,6 @@ import React, { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './App.css';
 
-/*
-canvas elements and functionality for drawing a depth map
-*/
-
 const Canvas = () => {
   const canvasRef = useRef(null);
   const [isDrawing, setIsDrawing] = useState(false);
@@ -13,6 +9,8 @@ const Canvas = () => {
   const [width, setWidth] = useState(600);
   const [height, setHeight] = useState(400);
   const [brushColor, setBrushColor] = useState('white');
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isHovering, setIsHovering] = useState(false);
 
   const startDrawing = (e) => {
     const canvas = canvasRef.current;
@@ -73,21 +71,36 @@ const Canvas = () => {
     setBrushColor(color);
   };
 
+  const handleMouseMove = (e) => {
+    setMousePosition({
+      x: e.clientX,
+      y: e.clientY
+    });
+  };
+
+  const handleMouseEnter = () => {
+    setIsHovering(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovering(false);
+  };
+
   return (
     <div>
       <div style={{ backgroundColor: '#f8ecc9', height: '90px', borderBottom: '2px solid #6b5344', marginBottom: '15px' }}>
-        <div class="return-top-bar">
-          <div style={{ position: 'relative', top: '10px', left: '15px', display: 'flex', alignItems: 'center' }}>
+        <div className="return-top-bar">
+          <div style={{ position: 'relative', top: '10px', left: '15px', display: 'flex', alignItems: 'center', width: 'calc(100% - 15px)' }}>
             <Link to="/" style={{ marginRight: '10px' }}>
               <button className='return-bar-button'>Back to Home</button>
             </Link>
-            <button className='return-bar-button' style={{ display: 'block', marginRight: '0' }} onClick={saveDrawing}>Save Drawing</button>
+            <button className='return-bar-button' onClick={saveDrawing}>Save Drawing</button>
           </div>
         </div>
       </div>
-      <div class="resizable-container">
-        <div class="content">
-          <div class="inner-content">
+      <div className="resizable-container">
+        <div className="content">
+          <div className="inner-content">
             <label style={{ marginRight: '10px' }}>
               Width:
               <input
@@ -98,7 +111,7 @@ const Canvas = () => {
               />
             </label>
           </div>
-          <div class="inner-content">
+          <div className="inner-content">
             <label style={{ marginRight: '10px' }}>
               Height:
               <input
@@ -110,8 +123,8 @@ const Canvas = () => {
             </label>
           </div>
         </div>
-        <div class="content">
-          <div class="inner-content">
+        <div className="content">
+          <div className="inner-content">
             <label>
               Brush Size: 
               <input 
@@ -123,26 +136,49 @@ const Canvas = () => {
               />
             </label>
           </div>
-          <div class="inner-content" style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <button class="brush-color-button" style={{ '--button-color': brushColor, border: '2px solid #fed8d3' }}></button>
+          <div className="inner-content" style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <button className="brush-color-button" style={{ '--button-color': brushColor, border: '2px solid #fed8d3' }}></button>
             <div style={{ width: '2px' }}></div>
-            <button class="brush-color-button" style={{ '--button-color': 'white' }} onClick={() => handleColorChange('white')}></button>
-            <button class="brush-color-button" style={{ '--button-color': 'grey' }} onClick={() => handleColorChange('grey')}></button>
-            <button class="brush-color-button" style={{ '--button-color': 'black' }} onClick={() => handleColorChange('black')}></button>
+            <button className="brush-color-button" style={{ '--button-color': 'white' }} onClick={() => handleColorChange('white')}></button>
+            <button className="brush-color-button" style={{ '--button-color': 'grey' }} onClick={() => handleColorChange('grey')}></button>
+            <button className="brush-color-button" style={{ '--button-color': 'black' }} onClick={() => handleColorChange('black')}></button>
           </div>
         </div>
       </div>
       
-      <canvas
-        ref={canvasRef}
-        width={width}
-        height={height}
-        style={{ border: '1px solid black' }}
-        onMouseDown={startDrawing}
-        onMouseMove={draw}
-        onMouseUp={stopDrawing}
-        onMouseLeave={stopDrawing}
-      />
+      <div style={{ position: 'relative' }}>
+        <canvas
+          ref={canvasRef}
+          width={width}
+          height={height}
+          style={{ border: '2px solid #6b5344', cursor: 'crosshair' }}
+          onMouseDown={startDrawing}
+          onMouseMove={(e) => {
+            draw(e);
+            handleMouseMove(e);
+          }}
+          onMouseUp={stopDrawing}
+          onMouseLeave={() => {
+            stopDrawing();
+            handleMouseLeave();
+          }}
+          onMouseEnter={handleMouseEnter}
+        />
+        {isHovering && (
+          <div
+            style={{
+              position: 'absolute',
+              left: mousePosition.x - brushSize,
+              top: mousePosition.y - brushSize - 237,
+              width: brushSize * 2,
+              height: brushSize * 2,
+              borderRadius: '50%',
+              backgroundColor: brushColor,
+              pointerEvents: 'none',
+            }}
+          ></div>
+        )}
+      </div>
     </div>
   );
 };

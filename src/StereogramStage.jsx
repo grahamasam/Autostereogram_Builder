@@ -54,7 +54,7 @@ const StereogramStage = () => {
     <div>
       <div style={{ backgroundColor: '#f8ecc9', height: '90px', borderBottom: '2px solid #6b5344', marginBottom: '15px' }}>
         <div class="return-top-bar">
-          <div style={{ position: 'relative', top: '10px', left: '15px', display: 'flex', alignItems: 'center' }}>
+          <div style={{ position: 'relative', top: '10px', left: '15px', display: 'flex', alignItems: 'center', width: 'calc(100% - 15px)' }}>
             <Link to="/" style={{ marginRight: '10px' }}>
               <button className='return-bar-button'>Back to Home</button>
             </Link>

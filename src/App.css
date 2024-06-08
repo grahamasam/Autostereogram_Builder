@@ -128,7 +128,7 @@ hr {
   position: relative;
   left: 15px;
   top: 15px;
-  width: 100%;
+  width: calc(100% - 15px);
   background-color: #F8D5C9;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
