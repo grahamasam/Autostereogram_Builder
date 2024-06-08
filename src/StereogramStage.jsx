@@ -50,6 +50,11 @@ const StereogramStage = () => {
     reader.readAsDataURL(depthMapFile);
   };
 
+  const handleSliceChange = async (e) => {
+    setSlices(e);
+    handleGenerateRandom();
+  }
+
   return (
     <div>
       <div style={{ backgroundColor: '#f8ecc9', height: '90px', borderBottom: '2px solid #6b5344', marginBottom: '15px' }}>
@@ -72,7 +77,9 @@ const StereogramStage = () => {
           <input
             type="number"
             value={slices}
-            onChange={(e) => setSlices(parseInt(e.target.value))}
+            onChange={(e) => {
+              handleSliceChange(parseInt(e.target.value));
+            }}
             style={{ marginLeft: '5px' }}
           />
         </label>
@@ -83,7 +90,11 @@ const StereogramStage = () => {
         position: 'relative',
         height: `${height}px`,
         width: `${width}px`,
-        border: '1px solid black'
+        border: '1px solid black',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        margin: '0 auto', // Center the container horizontally
       }}>
         <div style={{ position: 'absolute', top: 0, left: 0, width: `100%`, height: '100%', opacity: 0.5 }}>
           {depthMapFile && (
@@ -109,7 +120,12 @@ const StereogramStage = () => {
         <div style={{
           height: `${height}px`,
           width: `${width}px`,
-          border: '1px solid black'
+          border: '1px solid black',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          margin: '0 auto', // Center the container horizontally
+          marginBottom: '15px'
         }}>
           <img src={stereogramSrc} alt="Stereogram" style={{ width: '100%', height: '100%' }} />
         </div>
