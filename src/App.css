@@ -82,7 +82,7 @@ canvas {
 hr {
   border: none;
   border-top: 2px solid #6b5344; /* Adjust color and thickness */
-  margin: 20px 0; /* Adjust spacing */
+  margin: 15px 0; /* Adjust spacing */
 }
 
 .resizable-container {

@@ -53,6 +53,7 @@ const Canvas = () => {
       link.href = dataUrl;
       link.download = fileName;
       link.click();
+      URL.revokeObjectURL(dataUrl);
     }
   };
 
@@ -111,17 +112,17 @@ const Canvas = () => {
               />
             </label>
           </div>
-          <div className="inner-content">
-            <label style={{ marginRight: '10px' }}>
-              Height:
-              <input
-                type="number"
-                value={height}
-                onChange={(e) => setHeight(parseInt(e.target.value))}
-                style={{ marginLeft: '5px', width: '50px'  }}
-              />
-            </label>
-          </div>
+        <div className="inner-content">
+          <label style={{ marginRight: '10px' }}>
+            Height:
+            <input
+              type="number"
+              value={height}
+              onChange={(e) => setHeight(parseInt(e.target.value))}
+              style={{ marginLeft: '5px', width: '50px'  }}
+            />
+          </label>
+        </div>
         </div>
         <div className="content">
           <div className="inner-content">

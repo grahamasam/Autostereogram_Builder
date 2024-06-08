@@ -10,11 +10,15 @@ const StereogramStage = () => {
   const [depthMapFile, setDepthMapFile] = useState(null);
   const [width, setWidth] = useState(600);
   const [height, setHeight] = useState(400);
+  const [hasRandom, setHasRandom] = useState(false);
+  const [hasStereogram, setHasStereogram] = useState(false);
 
   const handleGenerateRandom = async () => {
+    setHasRandom(true);
     const slice_width = parseInt(width / slices);
     const base64Image = await invoke('generate_random_repeat', { width: slice_width, height });
     setImageSrc(`data:image/png;base64,${base64Image}`);
+    setHasRandom(true);
   };
 
   const handleUseDepthMap = async () => {
@@ -36,6 +40,11 @@ const StereogramStage = () => {
   };
 
   const handleGenerateStereogram = async () => {
+    if (!hasRandom) return;
+    /* TODO: ALSO SHOULD THROW UP WARNING IF FALSE */
+
+    setHasStereogram(true);
+
     const reader = new FileReader();
     reader.onload = async () => {
       const base64DepthMap = reader.result.split(',')[1];
@@ -50,10 +59,35 @@ const StereogramStage = () => {
     reader.readAsDataURL(depthMapFile);
   };
 
-  const handleSliceChange = async (e) => {
-    setSlices(e);
-    handleGenerateRandom();
-  }
+  const saveStereogram = () => {
+    if (!hasStereogram) return;
+    /* TODO: GIVE WARNING THAT STEREOGRAM MUST BE CREATED FIRST */
+
+    const fileName = window.prompt('Enter the name for your autotereogram:', 'autostereogram.png');
+    if (fileName) {
+      // Get the base64-encoded image data from state or props
+      const base64Image = stereogramSrc.split(',')[1]; // Extract only the base64 string
+      
+      // Convert base64 to blob
+      const byteCharacters = atob(base64Image);
+      const byteNumbers = new Array(byteCharacters.length);
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+      const blob = new Blob([byteArray], { type: 'image/png' });
+
+      // Create a link element, simulate click to trigger download
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = fileName;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+  };
 
   return (
     <div>
@@ -63,38 +97,50 @@ const StereogramStage = () => {
             <Link to="/" style={{ marginRight: '10px' }}>
               <button className='return-bar-button'>Back to Home</button>
             </Link>
+            <button className='return-bar-button' onClick={saveStereogram}>Save Stereogram</button>
           </div>
         </div>
       </div>
-      <div style={{ marginBottom: '10px', display: 'flex', alignItems: 'center' }}>
-        <button onClick={handleUseDepthMap}>Use Depth Map</button>
-        <button onClick={handleGenerateRandom}>Generate Random</button>
-        <button onClick={handleGenerateStereogram}>Generate Stereogram</button>
+      <div className="resizable-container">
+        <div className="content">
+          <div className="inner-content">
+            <button onClick={handleGenerateRandom}>Generate Random</button>
+          </div>
+          <div className='inner-content'>
+            <button onClick={handleGenerateStereogram}>Generate Stereogram</button>
+          </div>
+        </div>
+        <div className="content">
+          <div className='inner-content'>
+            <label style={{ marginRight: '10px' }}>
+              Slices:
+              <input
+                type="number"
+                value={slices}
+                onChange={(e) => {
+                  setSlices(e.target.value);
+                  setHasRandom(false);
+                }}
+                style={{ marginLeft: '5px', width: '50px' }}
+              />
+            </label>
+          </div>
+          <div className='inner-content'>
+            <button onClick={handleUseDepthMap}>Use Depth Map</button>
+          </div>
+        </div>
       </div>
-      <div style={{ marginBottom: '10px', display: 'flex', alignItems: 'center' }}>
-        <label style={{ marginRight: '10px' }}>
-          Slices:
-          <input
-            type="number"
-            value={slices}
-            onChange={(e) => {
-              handleSliceChange(parseInt(e.target.value));
-            }}
-            style={{ marginLeft: '5px' }}
-          />
-        </label>
-      </div>
-      <hr style={{ margin: '10px 0' }} />
       <input type="file" id="depthMapInput" style={{ display: 'none' }} accept=".png, .jpg, .jpeg" onChange={handleDepthMapChange} />
       <div style={{
         position: 'relative',
         height: `${height}px`,
         width: `${width}px`,
-        border: '1px solid black',
+        border: '2px solid #6b5344',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         margin: '0 auto', // Center the container horizontally
+        marginTop: '15px'
       }}>
         <div style={{ position: 'absolute', top: 0, left: 0, width: `100%`, height: '100%', opacity: 0.5 }}>
           {depthMapFile && (
@@ -106,21 +152,21 @@ const StereogramStage = () => {
         </div>
         <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}>
           <div style={{ display: 'flex', height: '100%', width: '100%', opacity: 0.8 }}>
-            <div style={{ flex: 1, backgroundColor: 'white', borderRight: '1px solid black' }}>
+            <div style={{ flex: 1, backgroundColor: 'white' }}>
               {imageSrc && <img src={imageSrc} alt="Generated" style={{ width: '100%', height: '100%' }} />}
             </div>
             {[...Array(slices - 1)].map((_, index) => (
-              <div key={index} style={{ flex: 1, backgroundColor: 'grey', borderRight: '1px solid black' }}></div>
+              <div key={index} style={{ flex: 1, backgroundColor: 'grey', borderLeft: '1px solid black' }}></div>
             ))}
           </div>
         </div>
       </div>
-      <hr style={{ margin: '10px 0' }} />
+      <hr></hr>
       {stereogramSrc && (
         <div style={{
           height: `${height}px`,
           width: `${width}px`,
-          border: '1px solid black',
+          border: '2px solid #6b5344',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
