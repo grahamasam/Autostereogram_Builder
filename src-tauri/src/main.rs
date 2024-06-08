@@ -67,13 +67,17 @@ fn generate_stereogram(slices: u32, image_src: String, depth_map: String) -> Str
             for y in 0..height {
                 let depth_pixel = depth_map_img.get_pixel(x, y);
 
-                if depth_pixel[0] == 255 {  // Assuming depth_map_image is in grayscale
-                    
+                if depth_pixel[0] == 255 {  // popout level 1 (white)
                     for i in 0..(slices - section_count) {
-
                         if ((x + i * slice_width) - 10) < repeated_image.width() {
-                            //let old_pixel = repeated_image.get_pixel(x, y);
                             *repeated_image.get_pixel_mut((x + i * slice_width) - 10, y) = *repeated_image.get_pixel(x, y);
+                        }
+                    }
+                }
+                else if depth_pixel[0] == 128 {  // popout level 2 (grey)
+                    for i in 0..(slices - section_count) {
+                        if ((x + i * slice_width) - 5) < repeated_image.width() {
+                            *repeated_image.get_pixel_mut((x + i * slice_width) - 5, y) = *repeated_image.get_pixel(x, y);
                         }
                     }
                 }
