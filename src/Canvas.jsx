@@ -147,7 +147,7 @@ const Canvas = () => {
         </div>
       </div>
       
-      <div style={{ position: 'relative' }}>
+      <div id="canvas_box" style={{ position: 'relative' }}>
         <canvas
           ref={canvasRef}
           width={width}
@@ -170,7 +170,7 @@ const Canvas = () => {
             style={{
               position: 'absolute',
               left: mousePosition.x - brushSize,
-              top: mousePosition.y - brushSize - 237,
+              top: mousePosition.y - brushSize - 237, /* 237 */
               width: brushSize * 2,
               height: brushSize * 2,
               borderRadius: '50%',

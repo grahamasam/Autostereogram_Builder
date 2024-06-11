@@ -12,6 +12,26 @@ const StereogramStage = () => {
   const [height, setHeight] = useState(400);
   const [hasRandom, setHasRandom] = useState(false);
   const [hasStereogram, setHasStereogram] = useState(false);
+  const [top_color, setTopColor] = useState('#ffffff'); // top gradient color
+  const [bottom_color, setBottomColor] = useState('#ffffff'); // top gradient color
+  const [darken, setDarken] = useState(40); // top gradient color
+  const [noise, setNoise] = useState(20); // top gradient color
+
+  const handleTopColorChange = (event) => {
+    setTopColor(event.target.value);
+  };
+
+  const handleBottomColorChange = (event) => {
+    setBottomColor(event.target.value);
+  };
+
+  const handleDarkenChange = (event) => {
+    setDarken(event.target.value);
+  };
+
+  const handleNoiseChange = (event) => {
+    setNoise(event.target.value);
+  };
 
   const handleGenerateRandom = async () => {
     setHasRandom(true);
@@ -25,6 +45,23 @@ const StereogramStage = () => {
     setHasRandom(true);
     const slice_width = parseInt(width / slices);
     const base64Image = await invoke('generate_random_color_repeat', { width: slice_width, height });
+    setImageSrc(`data:image/png;base64,${base64Image}`);
+    setHasRandom(true);
+  };
+
+  const handleGenerateGradient = async () => {
+    setHasRandom(true);
+    const slice_width = parseInt(width / slices);
+    const darkenInt = parseInt(darken);
+    const noiseInt = parseInt(noise);
+    const base64Image = await invoke('generate_gradient_repeat', {
+      width: slice_width,
+      height,
+      topColor: top_color,
+      bottomColor: bottom_color,
+      darken: darkenInt,
+      noise: noiseInt
+    });
     setImageSrc(`data:image/png;base64,${base64Image}`);
     setHasRandom(true);
   };
@@ -140,6 +177,62 @@ const StereogramStage = () => {
             <button onClick={handleUseDepthMap}>Use Depth Map</button>
           </div>
         </div>
+        <div className="content">
+          <div className="inner-content" style={{ display: 'flex', justifyContent: 'flex-start' }}>
+            <button 
+              className="brush-color-button"
+              onClick={() => document.getElementById('top-color-input').click()}
+              style={{ backgroundColor: top_color }}
+            >
+            </button>
+            <input 
+              type="color" 
+              id="top-color-input" 
+              value={top_color} 
+              onChange={handleTopColorChange}
+              style={{ display: 'none' }}
+            />
+            <button 
+              className="brush-color-button"
+              onClick={() => document.getElementById('bottom-color-input').click()}
+              style={{ backgroundColor: bottom_color, marginLeft: '15px', marginRight: '38px' }}
+            >
+            </button>
+            <input 
+              type="color" 
+              id="bottom-color-input" 
+              value={bottom_color} 
+              onChange={handleBottomColorChange}
+              style={{ display: 'none' }}
+            />
+            <button onClick={handleGenerateGradient}>Generate Gradient</button>
+          </div>
+          <div className='inner-content'>
+            <label>
+              Darken: 
+              <input 
+                type="number" 
+                value={darken} 
+                onChange={handleDarkenChange} 
+                min="0" 
+                style={{ marginLeft: '10px', width: '45px' }}
+              />
+            </label>
+            <label style={{ marginLeft: '15px' }}>
+              Noise: 
+              <input 
+                type="number" 
+                value={noise} 
+                onChange={handleNoiseChange} 
+                min="0" 
+                style={{ marginLeft: '10px', width: '45px' }}
+              />
+            </label>
+          </div>
+          <div className='inner-content'>
+            
+          </div>
+        </div>
       </div>
       <input type="file" id="depthMapInput" style={{ display: 'none' }} accept=".png, .jpg, .jpeg" onChange={handleDepthMapChange} />
       <div style={{
@@ -156,7 +249,6 @@ const StereogramStage = () => {
         <div style={{ position: 'absolute', top: 0, left: 0, width: `100%`, height: '100%', opacity: 0.5 }}>
           {depthMapFile && (
             <>
-              {console.log('Depth map URL:', URL.createObjectURL(depthMapFile))}
               <img src={URL.createObjectURL(depthMapFile)} alt="Depth Map" style={{ width: '100%', height: '100%' }} />
             </>
           )}

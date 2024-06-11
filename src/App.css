@@ -99,6 +99,7 @@ hr {
 }
 
 .inner-content {
+  position: relative;
   padding: 10px;
 }
 
@@ -109,7 +110,7 @@ hr {
   width: 40px;
   font-size: 16px;
   color: white;
-  background-color: var(--button-color, #007bff); /* Default color if not specified */
+  background-color: var(--button-color, #f0f0f0); /* Default color if not specified */
   border: 2px solid #ccc;
   border-radius: 70%; /* Makes the button circular */
   cursor: pointer;
@@ -147,4 +148,18 @@ hr {
 .return-bar-button:hover {
   background-color: #fed8d3;
   border: 2px solid #6b5344;
+}
+
+.color-picker-dropdown {
+  position: absolute;
+  top: calc(100% + 10px); /* Position below the button */
+  left: 50%; /* Center horizontally */
+  transform: translateX(-50%); /* Adjust for center alignment */
+  z-index: 3;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 0px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: none;
 }
