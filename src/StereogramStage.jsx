@@ -13,9 +13,9 @@ const StereogramStage = () => {
   const [hasRandom, setHasRandom] = useState(false);
   const [hasStereogram, setHasStereogram] = useState(false);
   const [top_color, setTopColor] = useState('#ffffff'); // top gradient color
-  const [bottom_color, setBottomColor] = useState('#ffffff'); // top gradient color
-  const [darken, setDarken] = useState(40); // top gradient color
-  const [noise, setNoise] = useState(20); // top gradient color
+  const [bottom_color, setBottomColor] = useState('#ffffff'); // botton gradient color
+  const [darken, setDarken] = useState(40); // darken for gradient repeat generation
+  const [noise, setNoise] = useState(20); // noise for gradient repeat generation
 
   const handleTopColorChange = (event) => {
     setTopColor(event.target.value);
