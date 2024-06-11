@@ -20,6 +20,19 @@ fn generate_random_image(width: u32, height: u32) -> RgbImage {
     img
 }
 
+fn generate_random_color_image(width: u32, height: u32) -> RgbImage {
+    let mut img = ImageBuffer::new(width, height);
+    let mut rng = rand::thread_rng();
+
+    for (_, _, pixel) in img.enumerate_pixels_mut() {
+        let mut value = rng.gen_range(0..=255);
+        let mut v2 = if rng.gen_bool(0.5) { 0 } else { value };
+        *pixel = image::Rgb([0, v2, value]);
+    }
+
+    img
+}
+
 // Function to convert the image to a base64 string
 fn image_to_base64(img: &RgbImage) -> String {
     let mut buffer = Cursor::new(Vec::new());
@@ -31,6 +44,12 @@ fn image_to_base64(img: &RgbImage) -> String {
 #[command]
 fn generate_random_repeat(width: u32, height: u32) -> String {
     let img = generate_random_image(width, height);
+    image_to_base64(&img)
+}
+
+#[command]
+fn generate_random_color_repeat(width: u32, height: u32) -> String {
+    let img = generate_random_color_image(width, height);
     image_to_base64(&img)
 }
 
@@ -96,7 +115,7 @@ fn generate_stereogram(slices: u32, image_src: String, depth_map: String) -> Str
 
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![generate_random_repeat, generate_stereogram])
+        .invoke_handler(tauri::generate_handler![generate_random_repeat, generate_random_color_repeat, generate_stereogram])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

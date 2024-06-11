@@ -21,6 +21,14 @@ const StereogramStage = () => {
     setHasRandom(true);
   };
 
+  const handleGenerateRandomColor = async () => {
+    setHasRandom(true);
+    const slice_width = parseInt(width / slices);
+    const base64Image = await invoke('generate_random_color_repeat', { width: slice_width, height });
+    setImageSrc(`data:image/png;base64,${base64Image}`);
+    setHasRandom(true);
+  };
+
   const handleUseDepthMap = async () => {
     const depthMapInput = document.getElementById('depthMapInput');
     depthMapInput.click(); // Trigger click on the hidden file input
@@ -106,8 +114,11 @@ const StereogramStage = () => {
           <div className="inner-content">
             <button onClick={handleGenerateRandom}>Generate Random</button>
           </div>
+          <div className="inner-content">
+            <button onClick={handleGenerateRandomColor}>Generate Random (color)</button>
+          </div>
           <div className='inner-content'>
-            <button onClick={handleGenerateStereogram}>Generate Stereogram</button>
+            
           </div>
         </div>
         <div className="content">
@@ -161,6 +172,7 @@ const StereogramStage = () => {
           </div>
         </div>
       </div>
+      <button onClick={handleGenerateStereogram} style={{ marginTop: "15px" }}>Generate Stereogram</button>
       <hr></hr>
       {stereogramSrc && (
         <div style={{
