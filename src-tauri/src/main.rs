@@ -191,22 +191,22 @@ fn generate_stereogram(slices: u32, image_src: String, depth_map: String) -> Str
     let full_width = repeated_image.width();
     let slice_width = full_width / slices;
 
+    let num_levels = 30 as f32;
+    let popout = 5;
+    let relative_scale = 1;
+
     for section_count in 0..(slices - 1) {
         for x in (slice_width * (section_count + 1))..(slice_width * (section_count + 2)) {
             for y in 0..height {
                 let depth_pixel = depth_map_img.get_pixel(x, y);
 
-                if depth_pixel[0] == 255 {  // popout level 1 (white)
+                if depth_pixel[0] != 0 {
+                    let pixel_float = depth_pixel[0] as f32;
+                    let mut offset = (pixel_float / 255.0 * num_levels) as u32; // map to value 0-20 and truncate
+                    offset = offset * relative_scale + popout;
                     for i in 0..(slices - section_count) {
-                        if ((x + i * slice_width) - 10) < repeated_image.width() {
-                            *repeated_image.get_pixel_mut((x + i * slice_width) - 10, y) = *repeated_image.get_pixel(x, y);
-                        }
-                    }
-                }
-                else if depth_pixel[0] == 128 {  // popout level 2 (grey)
-                    for i in 0..(slices - section_count) {
-                        if ((x + i * slice_width) - 5) < repeated_image.width() {
-                            *repeated_image.get_pixel_mut((x + i * slice_width) - 5, y) = *repeated_image.get_pixel(x, y);
+                        if ((x + i * slice_width) - offset) < repeated_image.width() {
+                            *repeated_image.get_pixel_mut((x + i * slice_width) - offset, y) = *repeated_image.get_pixel(x, y);
                         }
                     }
                 }
