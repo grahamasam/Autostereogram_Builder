@@ -1,5 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { open, save } from '@tauri-apps/api/dialog';
+import { writeBinaryFile, BaseDirectory } from '@tauri-apps/api/fs';
 import './App.css';
 
 const Canvas = () => {
@@ -11,6 +13,7 @@ const Canvas = () => {
   const [brushColor, setBrushColor] = useState('white');
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
+  const [fileName, setFileName] = useState('drawing.png');
 
   const startDrawing = (e) => {
     const canvas = canvasRef.current;
@@ -43,7 +46,7 @@ const Canvas = () => {
     context.closePath();
     setIsDrawing(false);
   };
-
+/*
   const saveDrawing = () => {
     const fileName = window.prompt('Enter the name for your drawing:', 'drawing.png');
     if (fileName) {
@@ -54,6 +57,32 @@ const Canvas = () => {
       link.download = fileName;
       link.click();
       URL.revokeObjectURL(dataUrl);
+    }
+  };
+*/
+  const saveDrawing = async () => {
+    const canvas = canvasRef.current;
+    const image = canvas.toDataURL('image/png');
+    const byteString = atob(image.split(',')[1]);
+    const mimeString = image.split(',')[0].split(':')[1].split(';')[0];
+    const ab = new ArrayBuffer(byteString.length);
+    const ia = new Uint8Array(ab);
+    for (let i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
+    }
+    
+    const blob = new Blob([ab], { type: mimeString });
+    const buffer = await blob.arrayBuffer();
+    
+    const filePath = await save({
+      defaultPath: "depthmap.png",
+      filters: [{ name: 'Image', extensions: ['png'] }]
+    });
+    
+    if (filePath) {
+      await writeBinaryFile(filePath, new Uint8Array(buffer), {
+        dir: BaseDirectory.App,
+      });
     }
   };
 

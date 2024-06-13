@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { invoke } from '@tauri-apps/api/tauri';
+import { open, save } from '@tauri-apps/api/dialog';
+import { writeBinaryFile, BaseDirectory } from '@tauri-apps/api/fs';
 import './App.css';
 
 const StereogramStage = () => {
@@ -16,6 +18,7 @@ const StereogramStage = () => {
   const [bottom_color, setBottomColor] = useState('#ffffff'); // botton gradient color
   const [darken, setDarken] = useState(40); // darken for gradient repeat generation
   const [noise, setNoise] = useState(20); // noise for gradient repeat generation
+  const [fileName, setFileName] = useState('stereogram.png');
 
   const handleTopColorChange = (event) => {
     setTopColor(event.target.value);
@@ -104,33 +107,23 @@ const StereogramStage = () => {
     reader.readAsDataURL(depthMapFile);
   };
 
-  const saveStereogram = () => {
+  const saveStereogram = async () => {
     if (!hasStereogram) return;
-    /* TODO: GIVE WARNING THAT STEREOGRAM MUST BE CREATED FIRST */
 
-    const fileName = window.prompt('Enter the name for your autotereogram:', 'autostereogram.png');
-    if (fileName) {
-      // Get the base64-encoded image data from state or props
+    const filePath = await save({
+      defaultPath: "stereogram.png",
+      filters: [{ name: 'Image', extensions: ['png'] }]
+    });
+
+    if (filePath) {
       const base64Image = stereogramSrc.split(',')[1]; // Extract only the base64 string
-      
-      // Convert base64 to blob
       const byteCharacters = atob(base64Image);
       const byteNumbers = new Array(byteCharacters.length);
       for (let i = 0; i < byteCharacters.length; i++) {
         byteNumbers[i] = byteCharacters.charCodeAt(i);
       }
       const byteArray = new Uint8Array(byteNumbers);
-      const blob = new Blob([byteArray], { type: 'image/png' });
-
-      // Create a link element, simulate click to trigger download
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = fileName;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
+      await writeBinaryFile(filePath, byteArray);
     }
   };
 
