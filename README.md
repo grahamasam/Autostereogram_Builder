@@ -4,6 +4,10 @@ A desktop application to create custom autostereogram images. Built with Tauri, 
 
 Draw depth maps or import your own and customize the number of repeats, noise, color, and gradient of generated autostereogram.
 
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/25dfed0c-b86c-4af5-af61-5e735c02a679" width="350"> <img src="https://github.com/user-attachments/assets/7e3536b0-9a71-4246-ac25-ca0396f03013" width="378">
+</p>
+
 *See below for a brief tutorial*
 
 ---
