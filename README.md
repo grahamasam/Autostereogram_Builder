@@ -21,7 +21,7 @@ Draw depth maps or import your own and customize the number of repeats, noise, c
 - Save the map to your computer.
   
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/c8e501b3-21c2-4fc6-a5d0-44cd0399f209" width="550">
+  <img src="https://github.com/user-attachments/assets/267773e5-db66-49e0-86d1-e027cfcae8f4" width="550">
 </p>
 
 ---
@@ -31,7 +31,7 @@ Draw depth maps or import your own and customize the number of repeats, noise, c
 - Otherwise, select two colors in the circles to create a gradient.
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/bca70bdb-de6d-4806-a304-3aa1a3861e22" width="550">
+  <img src="https://github.com/user-attachments/assets/301a0c5c-57d3-4520-9211-140ac30183d3" width="550">
 </p>
 
 ---
@@ -40,8 +40,25 @@ Draw depth maps or import your own and customize the number of repeats, noise, c
 - Depending on the complexity of the depth map, adjusting the number of slices can ensure more information is retained in the illusion.
   
 <p align="center">
-  <img src="hhttps://github.com/user-attachments/assets/9ea9b0f0-5b13-4538-afd4-51479bc2926d" width="550">
+  <img src="https://github.com/user-attachments/assets/6e3ce2b1-c72a-4c92-97de-84fc192f51d6" width="550">
 </p>
 
+---
+
+- Finally, click "Generate Stereogram".
+- If you're happy with the result, "Save Stereogram" to download it.
+- Otherwise, continue to iterate with different settings!
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/adcef092-f814-4d80-a452-b15d05c153c7" width="550">
+</p>
+
+---
+
+- Also, here is a classic shark depth map to have some fun with.
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/27d5dbb5-3d9d-4687-8b74-84f0da88997c" width="350"> <img src="https://github.com/user-attachments/assets/f471a28d-1568-4e95-9131-85ce660d3b66" width="350">
+</p>
 
 
